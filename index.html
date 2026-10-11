@@ -1007,13 +1007,13 @@
       box-shadow: 0 0 0 4px rgba(191, 155, 64, 0.35);
     }
 
-    /* Redes sociais por baixo do título do Contacto */
+    /* Redes sociais: bloco com título próprio, por cima de "Entre em contacto" */
     .social-links {
       display: flex;
       flex-wrap: wrap;
       justify-content: center;
       gap: 0.75rem;
-      margin: 1.5rem 0 2.5rem;
+      margin: 0 0 3.5rem;
     }
 
     .social-link {
@@ -1176,8 +1176,7 @@
     </div><!-- Repertório -->
     <section id="repertorio" class="py-16 px-4">
       <div class="max-w-3xl mx-auto">
-        <h2 data-template-id="audio-title" class="canva-text section-label section-label--on-light mb-4">Uma
-          seleção do nosso
+        <h2 data-template-id="audio-title" class="canva-text section-label section-label--on-light mb-4">Seleção do
           repertório</h2>
         <br>
         <ol class="track-list" id="audio-list">
@@ -1556,17 +1555,17 @@
         <!-- Para adicionar fotos: coloque o ficheiro em images/gallery/ e copie uma linha <img class="gallery-slide"> -->
         <div class="gallery">
           <div id="carousel" tabindex="0" aria-label="Galeria de fotos" class="gallery-track no-scrollbar">
-            <img class="gallery-slide" loading="lazy" src="images/gallery/Image_04.jpg"
+            <img class="gallery-slide" loading="lazy" src="images/gallery/image_04.webp"
               alt="Violinista a tocar no coro alto de uma igreja com talha dourada">
-            <img class="gallery-slide" loading="lazy" src="images/gallery/Image_03.jpg"
+            <img class="gallery-slide" loading="lazy" src="images/gallery/image_03.webp"
               alt="Mãos a tocar piano digital">
-            <img class="gallery-slide" loading="lazy" src="images/gallery/Image_05.jpg"
+            <img class="gallery-slide" loading="lazy" src="images/gallery/image_05.webp"
               alt="Partituras em tablets numa estante de música">
-            <img class="gallery-slide" loading="lazy" src="images/gallery/Image_07.jpg"
+            <img class="gallery-slide" loading="lazy" src="images/gallery/image_07.webp"
               alt="Músico de costas voltado para o altar-mor em talha dourada">
-            <img class="gallery-slide gallery-slide--right" loading="lazy" src="images/gallery/Image_08.jpg"
+            <img class="gallery-slide gallery-slide--right" loading="lazy" src="images/gallery/image_08.webp"
               alt="Cantora a ler a partitura num tablet junto à balaustrada do coro alto">
-            <img class="gallery-slide" loading="lazy" src="images/gallery/Image_06.jpg"
+            <img class="gallery-slide" loading="lazy" src="images/gallery/image_06.webp"
               alt="Pianista a tocar no coro alto de uma igreja">
           </div>
           <div class="gallery-controls">
@@ -1586,8 +1585,8 @@
     </div><!-- Contacto -->
     <section id="contacto" class="py-16 px-4">
       <div class="max-w-2xl mx-auto">
-        <h2 data-template-id="contact-title" class="canva-text section-label section-label--on-light mb-4">Entre em
-          contacto</h2>
+        <h2 data-template-id="social-title" class="canva-text section-label section-label--on-light mb-6">Redes
+          sociais</h2>
         <div class="social-links">
           <a href="https://www.instagram.com/lumenvox_coro?stkn=MXdsbXR0ZngxOXg4Yg%3D%3D&amp;utm_source=qr"
             class="social-link" target="_blank" rel="noopener">
@@ -1598,6 +1597,8 @@
             <i data-lucide="facebook"></i>Facebook
           </a>
         </div>
+        <h2 data-template-id="contact-title" class="canva-text section-label section-label--on-light mb-10">Entre em
+          contacto</h2>
         <form action="https://formspree.io/f/xdavwbzg" method="POST" class="contact-card p-6 sm:p-10 space-y-6">
 
           <div class="grid gap-6 sm:grid-cols-2">
