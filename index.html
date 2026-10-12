@@ -217,6 +217,33 @@
       }
     }
 
+    /* Ecrãs verticais: o cover deixaria só a pessoa do meio. A foto aparece inteira por baixo
+       do logótipo, sobre um fundo feito com a mesma foto desfocada. */
+    @media (max-aspect-ratio: 1/1) {
+      .hero::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: url('images/header_01.png') center / cover;
+        filter: blur(28px) brightness(0.45);
+        transform: scale(1.15);
+      }
+
+      .hero .hero-img {
+        top: auto;
+        bottom: 5rem;
+        height: auto;
+        -webkit-mask-image: linear-gradient(to bottom, transparent, #000 14%, #000 86%, transparent);
+        mask-image: linear-gradient(to bottom, transparent, #000 14%, #000 86%, transparent);
+      }
+
+      /* centra o logótipo no espaço acima da foto (altura da foto = 100vw × 924/1702) */
+      .hero-overlay {
+        padding-bottom: calc(54.3vw + 5rem);
+        background: linear-gradient(to bottom, rgba(10, 8, 5, 0.35) 0%, rgba(10, 8, 5, 0.1) 50%, rgba(10, 8, 5, 0.4) 100%);
+      }
+    }
+
     @media (prefers-reduced-motion: reduce) {
 
       .hero-img,
