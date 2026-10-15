@@ -1010,7 +1010,8 @@
     .field::placeholder,
     select.field:has(option[value=""]:checked),
     input[type="date"].field.is-empty,
-    .date-trigger.is-empty {
+    .date-trigger.is-empty,
+    .select-trigger.is-empty {
       color: #a8a29e;
     }
 
@@ -1018,7 +1019,8 @@
       color: #292524;
     }
 
-    select.field {
+    select.field,
+    .select-trigger {
       appearance: none;
       -webkit-appearance: none;
       padding-right: 2.5rem;
@@ -1073,13 +1075,15 @@
       background-position: right 1rem center;
     }
 
-    .date-trigger[aria-expanded="true"] {
+    .date-trigger[aria-expanded="true"],
+    .select-trigger[aria-expanded="true"] {
       background-color: #fff;
       border-color: #bf9b40;
       box-shadow: 0 0 0 4px rgba(191, 155, 64, 0.18);
     }
 
-    .date-popup {
+    .date-popup,
+    .select-popup {
       position: absolute;
       top: calc(100% + 0.5rem);
       right: 0;
@@ -1098,7 +1102,8 @@
       transition: opacity .18s ease, transform .18s ease, visibility .18s;
     }
 
-    .date-popup.is-open {
+    .date-popup.is-open,
+    .select-popup.is-open {
       opacity: 1;
       visibility: visible;
       transform: none;
@@ -1203,7 +1208,8 @@
       outline-offset: 1px;
     }
 
-    .date-foot {
+    .date-foot,
+    .select-foot {
       display: flex;
       justify-content: space-between;
       margin-top: 0.6rem;
@@ -1227,12 +1233,70 @@
       background: #faf6ec;
     }
 
+    /* Lista própria do Tipo de Cerimónia: o select nativo não deixa pôr o botão "Limpar" na lista.
+       Usa o cartão e o rodapé do calendário, mas ocupa a largura do campo */
+    .select-field {
+      position: relative;
+    }
+
+    .select-trigger {
+      display: block;
+      text-align: left;
+    }
+
+    .select-popup {
+      left: 0;
+      width: auto;
+      max-width: none;
+      padding: 0.5rem;
+    }
+
+    .select-option {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+      padding: 0.55rem 0.75rem;
+      border-radius: 0.5rem;
+      text-align: left;
+      font-size: 1.05rem;
+      color: #292524;
+      transition: background-color .15s;
+    }
+
+    .select-option:hover {
+      background: #f5f0e4;
+    }
+
+    .select-option[aria-selected="true"] {
+      font-weight: 700;
+    }
+
+    .select-option svg {
+      flex: none;
+      width: 1rem;
+      height: 1rem;
+      color: #bf9b40;
+    }
+
+    .select-option:focus-visible {
+      outline: 2px solid #bf9b40;
+      outline-offset: -2px;
+    }
+
+    .select-foot {
+      margin: 0.35rem 0 0;
+      padding: 0.4rem 0.25rem 0;
+    }
+
     @media (prefers-reduced-motion: reduce) {
 
       .date-popup,
+      .select-popup,
       .date-nav,
       .date-day,
-      .date-action {
+      .date-action,
+      .select-option {
         transition: none;
       }
     }
@@ -1259,6 +1323,103 @@
     .contact-submit:focus-visible {
       outline: none;
       box-shadow: 0 0 0 4px rgba(191, 155, 64, 0.35);
+    }
+
+    .contact-submit:disabled {
+      opacity: 0.7;
+      cursor: wait;
+      transform: none;
+    }
+
+    /* Aviso depois do envio do formulário: cartão claro num <dialog> modal. O padding fica no
+       .form-dialog-body, para que um clique no fundo escurecido (fora do corpo) feche o aviso */
+    .form-dialog {
+      width: min(26rem, calc(100vw - 2rem));
+      padding: 0;
+      background: #fffdf8;
+      border: 1px solid #e9dfc6;
+      border-top: 3px solid #bf9b40;
+      border-radius: 1rem;
+      box-shadow: 0 1px 2px rgba(60, 40, 10, 0.04), 0 24px 48px -16px rgba(60, 40, 10, 0.45);
+      color: #292524;
+    }
+
+    .form-dialog::backdrop {
+      background: rgba(28, 25, 23, 0.6);
+      backdrop-filter: blur(3px);
+    }
+
+    .form-dialog[open] {
+      animation: dialog-in .25s ease;
+    }
+
+    .form-dialog[open]::backdrop {
+      animation: dialog-fade .25s ease;
+    }
+
+    @keyframes dialog-in {
+      from {
+        opacity: 0;
+        transform: translateY(0.75rem);
+      }
+    }
+
+    @keyframes dialog-fade {
+      from {
+        opacity: 0;
+      }
+    }
+
+    .form-dialog-body {
+      padding: 2rem 1.75rem 1.75rem;
+      text-align: center;
+    }
+
+    .form-dialog-icon {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 3rem;
+      height: 3rem;
+      margin: 0 auto 1.25rem;
+      border: 1px solid rgba(191, 155, 64, 0.45);
+      border-radius: 9999px;
+      background: rgba(191, 155, 64, 0.08);
+      color: #a16207;
+    }
+
+    .form-dialog-icon svg {
+      width: 22px;
+      height: 22px;
+      stroke-width: 1.75;
+    }
+
+    .form-dialog-title {
+      font-size: 1.4rem;
+      font-weight: 700;
+      line-height: 1.25;
+      color: #292524;
+    }
+
+    .form-dialog-text {
+      margin-top: 0.75rem;
+      font-size: 1.05rem;
+      line-height: 1.55;
+      color: #57534e;
+    }
+
+    .form-dialog-close {
+      margin-top: 1.75rem;
+      padding: 0.75rem 2.5rem;
+      font-size: 16px;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+
+      .form-dialog[open],
+      .form-dialog[open]::backdrop {
+        animation: none;
+      }
     }
 
     /* Redes sociais: bloco com título próprio, por cima de "Entre em contacto" */
@@ -1862,24 +2023,27 @@
         </div>
         <h2 data-template-id="contact-title" class="canva-text section-label section-label--on-light mb-10">Entre em
           contacto</h2>
-        <form action="https://formspree.io/f/xdavwbzg" method="POST" class="contact-card p-6 sm:p-10 space-y-6">
+        <form id="contact-form" action="https://formspree.io/f/xdavwbzg" method="POST"
+          class="contact-card p-6 sm:p-10 space-y-6">
 
           <div class="grid gap-6 sm:grid-cols-2">
             <div>
-              <label data-template-id="label-name" class="field-label" for="c-name">Nome<span class="field-required" aria-hidden="true">*</span></label>
+              <label data-template-id="label-name" class="field-label" for="c-name">Nome<span class="field-required"
+                  aria-hidden="true">*</span></label>
               <input id="c-name" type="text" name="nome" required autocomplete="name" placeholder="O seu nome"
                 class="field">
             </div>
 
             <div>
-              <label data-template-id="label-email" class="field-label" for="c-email">Email<span class="field-required" aria-hidden="true">*</span></label>
+              <label data-template-id="label-email" class="field-label" for="c-email">Email<span class="field-required"
+                  aria-hidden="true">*</span></label>
               <input id="c-email" type="email" name="email" required autocomplete="email" placeholder="nome@exemplo.com"
                 class="field">
             </div>
           </div>
 
           <div class="grid gap-6 sm:grid-cols-2">
-            <div>
+            <div class="select-field">
               <label data-template-id="label-event" class="field-label" for="c-event">Tipo de Cerimónia</label>
               <select id="c-event" name="tipo_cerimonia" class="field">
                 <option value="">Selecione o tipo...</option>
@@ -1898,9 +2062,10 @@
           </div>
 
           <div>
-            <label data-template-id="label-message" class="field-label" for="c-msg">Mensagem<span class="field-required" aria-hidden="true">*</span></label>
+            <label data-template-id="label-message" class="field-label" for="c-msg">Mensagem<span class="field-required"
+                aria-hidden="true">*</span></label>
             <textarea id="c-msg" name="mensagem" rows="5" required
-              placeholder="Conte-nos a data, o local e o que imagina para a cerimónia…" class="field"></textarea>
+              placeholder="Conte-nos o local e o que imagina para a cerimónia…" class="field"></textarea>
           </div>
 
           <input type="hidden" name="_subject" value="Novo pedido através do site LumenVox">
@@ -1914,10 +2079,26 @@
           </button>
 
         </form>
-        <div id="form-success"
-          class="hidden mt-6 p-4 bg-green-50 border border-green-200 rounded-lg text-center text-green-800 font-semibold">
-          Mensagem enviada com sucesso! Entraremos em contacto brevemente.
-        </div>
+        <dialog id="form-dialog" class="form-dialog" aria-labelledby="form-dialog-title"
+          aria-describedby="form-dialog-text">
+          <div class="form-dialog-body">
+            <div class="form-dialog-icon">
+              <svg data-state="success" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round"
+                stroke-linejoin="round" aria-hidden="true">
+                <path d="M20 6 9 17l-5-5" />
+              </svg>
+              <svg data-state="error" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round"
+                stroke-linejoin="round" aria-hidden="true" hidden>
+                <path d="M18 6 6 18M6 6l12 12" />
+              </svg>
+            </div>
+            <h3 id="form-dialog-title" class="form-dialog-title"></h3>
+            <p id="form-dialog-text" class="form-dialog-text"></p>
+            <button type="button" class="contact-submit form-dialog-close font-sans-alt font-semibold tracking-wide">
+              Fechar
+            </button>
+          </div>
+        </dialog>
       </div>
     </section>
   </main>
@@ -2320,6 +2501,8 @@
       }
 
       checkDate();
+      // O evento reset chega antes de o browser limpar os campos
+      eventDate.form.addEventListener('reset', () => setTimeout(checkDate));
       // Volta a calcular ao entrar no campo, para o caso de a página ter ficado aberta de um dia para o outro
       eventDate.addEventListener('focus', setMinDate);
       eventDate.addEventListener('input', checkDate);
@@ -2513,6 +2696,12 @@
       if (eventDate.value && eventDate.value < toISO(startOfToday())) eventDate.value = '';
       updateTrigger();
 
+      // Num input hidden, o reset do formulário não apaga o valor: limpa-se à mão
+      eventDate.form.addEventListener('reset', () => {
+        eventDate.value = '';
+        updateTrigger();
+      });
+
       trigger.addEventListener('click', () => {
         if (popup.classList.contains('is-open')) close(false);
         else open();
@@ -2573,6 +2762,205 @@
         if (to && !popup.contains(to) && to !== trigger) close(false);
       });
     }
+
+    // Tipo de Cerimónia: lista própria em todos os ecrãs (ao contrário do calendário, uma lista
+    // funciona bem ao toque), para poder ter o botão "Limpar". O select fica escondido e é ele
+    // que guarda e envia o valor; a opção vazia serve só de texto do campo por escolher
+    setupCeremonySelect();
+
+    function setupCeremonySelect() {
+      const select = document.getElementById('c-event');
+      const placeholder = select.querySelector('option[value=""]').textContent;
+      const check = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+        stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>`;
+
+      const trigger = document.createElement('button');
+      trigger.type = 'button';
+      trigger.id = select.id;
+      trigger.className = 'field select-trigger';
+      trigger.setAttribute('aria-haspopup', 'listbox');
+      trigger.setAttribute('aria-expanded', 'false');
+      select.removeAttribute('id');
+      select.hidden = true;
+      select.before(trigger);
+
+      const popup = document.createElement('div');
+      popup.className = 'select-popup';
+      popup.innerHTML = `
+        <div role="listbox" aria-label="Tipo de cerimónia"></div>
+        <div class="select-foot">
+          <button type="button" class="date-action" data-action="clear">Limpar</button>
+        </div>`;
+      select.after(popup);
+
+      const list = popup.querySelector('[role="listbox"]');
+      [...select.options].filter(o => o.value).forEach(o => {
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'select-option';
+        btn.setAttribute('role', 'option');
+        btn.dataset.value = o.value;
+        btn.textContent = o.value;
+        list.append(btn);
+      });
+      const options = [...list.children];
+
+      function update() {
+        const value = select.value;
+        trigger.textContent = value || placeholder;
+        trigger.classList.toggle('is-empty', !value);
+        trigger.setAttribute('aria-label', `Tipo de cerimónia: ${value || 'por escolher'}`);
+        options.forEach(btn => {
+          const selected = btn.dataset.value === value;
+          btn.setAttribute('aria-selected', selected);
+          btn.tabIndex = selected ? 0 : -1;
+          btn.innerHTML = '';
+          btn.append(btn.dataset.value);
+          if (selected) btn.insertAdjacentHTML('beforeend', check);
+        });
+        if (!value) options[0].tabIndex = 0;
+      }
+
+      function focusOption(btn) {
+        options.forEach(b => { b.tabIndex = b === btn ? 0 : -1; });
+        btn.focus({ preventScroll: true });
+      }
+
+      function open() {
+        popup.classList.add('is-open');
+        trigger.setAttribute('aria-expanded', 'true');
+        focusOption(options.find(b => b.tabIndex === 0));
+        popup.scrollIntoView({ block: 'nearest', behavior: reduceMotion ? 'auto' : 'smooth' });
+      }
+
+      function close(returnFocus) {
+        if (!popup.classList.contains('is-open')) return;
+        popup.classList.remove('is-open');
+        trigger.setAttribute('aria-expanded', 'false');
+        if (returnFocus) trigger.focus();
+      }
+
+      function pick(value) {
+        select.value = value;
+        select.dispatchEvent(new Event('change', { bubbles: true }));
+        update();
+        close(true);
+      }
+
+      // Mostra também o valor que o browser tenha reposto de uma visita anterior
+      update();
+      // O evento reset chega antes de o browser repor o select
+      select.form.addEventListener('reset', () => setTimeout(update));
+
+      trigger.addEventListener('click', () => {
+        if (popup.classList.contains('is-open')) close(false);
+        else open();
+      });
+
+      trigger.addEventListener('keydown', e => {
+        if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
+          e.preventDefault();
+          open();
+        } else if (e.key === 'Escape') {
+          close(false);
+        } else if (e.key === 'Backspace' || e.key === 'Delete') {
+          e.preventDefault();
+          pick('');
+        }
+      });
+
+      popup.addEventListener('click', e => {
+        const option = e.target.closest('.select-option');
+        if (option) pick(option.dataset.value);
+        else if (e.target.closest('.date-action')) pick('');
+      });
+
+      popup.addEventListener('keydown', e => {
+        if (e.key === 'Escape') {
+          e.preventDefault();
+          close(true);
+        }
+      });
+
+      // Setas: opção anterior/seguinte; Home/End: primeira/última
+      list.addEventListener('keydown', e => {
+        const i = options.indexOf(document.activeElement);
+        let next;
+        if (e.key === 'ArrowDown') next = options[Math.min(i + 1, options.length - 1)];
+        else if (e.key === 'ArrowUp') next = options[Math.max(i - 1, 0)];
+        else if (e.key === 'Home') next = options[0];
+        else if (e.key === 'End') next = options[options.length - 1];
+        else return;
+        e.preventDefault();
+        focusOption(next);
+      });
+
+      document.addEventListener('pointerdown', e => {
+        if (!e.target.closest('.select-field')) close(false);
+      });
+
+      popup.addEventListener('focusout', e => {
+        const to = e.relatedTarget;
+        if (to && !popup.contains(to) && to !== trigger) close(false);
+      });
+    }
+
+    // Envio do formulário sem sair da página: o Formspree responde em JSON (em vez de redirecionar
+    // para a página de agradecimento dele) e o resultado aparece num aviso com o estilo do site.
+    // Sem JS, o formulário continua a enviar pelo action
+    const contactForm = document.getElementById('contact-form');
+    const formDialog = document.getElementById('form-dialog');
+    const submitBtn = contactForm.querySelector('[type="submit"]');
+    const submitLabel = submitBtn.textContent.trim();
+
+    const DIALOG_TEXT = {
+      success: {
+        title: 'Mensagem enviada!',
+        text: 'Obrigado pelo seu contacto. Responderemos brevemente para o email indicado.'
+      },
+      error: {
+        title: 'Não foi possível enviar a sua mensagem',
+        text: 'Tente novamente ou fale connosco através das nossas redes sociais.'
+      }
+    };
+
+    function showFormDialog(state) {
+      formDialog.querySelector('#form-dialog-title').textContent = DIALOG_TEXT[state].title;
+      formDialog.querySelector('#form-dialog-text').textContent = DIALOG_TEXT[state].text;
+      formDialog.querySelectorAll('.form-dialog-icon svg').forEach(svg => {
+        // Atributo e não a propriedade: os <svg> não têm .hidden (só os elementos HTML)
+        svg.toggleAttribute('hidden', svg.dataset.state !== state);
+      });
+      formDialog.showModal();
+      formDialog.querySelector('.form-dialog-close').focus();
+    }
+
+    contactForm.addEventListener('submit', async e => {
+      // Browsers antigos sem <dialog>: fica o envio normal
+      if (typeof formDialog.showModal !== 'function') return;
+      e.preventDefault();
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'A enviar…';
+      let ok = false;
+      try {
+        const res = await fetch(contactForm.action, {
+          method: 'POST',
+          body: new FormData(contactForm),
+          headers: { Accept: 'application/json' }
+        });
+        ok = res.ok;
+      } catch (err) { }
+      submitBtn.disabled = false;
+      submitBtn.textContent = submitLabel;
+      if (ok) contactForm.reset();
+      showFormDialog(ok ? 'success' : 'error');
+    });
+
+    formDialog.querySelector('.form-dialog-close').addEventListener('click', () => formDialog.close());
+    // Clique no fundo escurecido (o próprio <dialog>, fora do corpo) fecha o aviso
+    formDialog.addEventListener('click', e => {
+      if (e.target === formDialog) formDialog.close();
+    });
   </script>
 </body>
 
